@@ -28,6 +28,7 @@ $email = strstr($email, '@', true);
         <div class="navbar-nav mx-auto">
             <a class="nav-link" href="actived_users.php">Usuarios activos</a>
             <a class="nav-link active" href="">Usuarios deshabilitados</a>
+            <a class="nav-link" href="../admin/show_movies.php">Películas</a>
         </div>
         <div class="navbar-nav ms-auto">
             <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
@@ -42,7 +43,7 @@ $email = strstr($email, '@', true);
     <h5>Buscar usuarios</h5>
     <div class="row mb-3">
         <div class="col-md-4 position-relative">
-            <input type="text" id="emailSearch" class="form-control pe-5" placeholder="Buscar por email...">
+            <input type="text" id="emailSearch" class="form-control pe-5" placeholder="Buscar por email">
             <span id="clearSearch" class="position-absolute top-50 end-0 translate-middle-y pe-3 cursor-pointer" style="display:none;">
                 <i class="fas fa-times"></i>
             </span>

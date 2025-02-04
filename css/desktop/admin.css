@@ -1,0 +1,47 @@
+.navbar .btn-add-movie {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    border-radius: 25px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar .btn-add-movie:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+}
+
+.navbar .btn-add-movie:active {
+    background-color: #444;
+    transform: translateY(0);
+}
+
+#table-titulo {
+    width: 20%;
+}
+
+#table-descripcion {
+    width: 25%;
+}
+
+#table-genero {
+    width: 10%;
+}
+
+#table-director {
+    width: 15%;
+}
+
+#table-fecha-estreno {
+    width: 10%;
+}
+
+#table-duracion {
+    width: 10%;
+}
+
+#table-acciones {
+    width: 10%;
+    white-space: nowrap;
+}

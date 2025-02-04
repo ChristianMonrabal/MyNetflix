@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const clearButton = document.getElementById('clearSearch');
     const userTable = document.getElementById('userTable');
 
-    // Mostrar la "X" cuando el input tenga texto
     searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.trim();
-        clearButton.style.display = searchTerm ? 'block' : 'none'; // Mostrar/Ocultar "X"
+        clearButton.style.display = searchTerm ? 'block' : 'none';
 
         if (searchTerm) {
             ajaxRequest(`../php/search_users_active.php?email=${searchTerm}`);
@@ -52,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${user.fecha_registro}</td>
                 <td>
                     <a href="../php/disable_users.php?id=${user.id_usuario}" class="btn btn-warning btn-sm">Desactivar</a>
-                    <a href="../php/delete.php?id=${user.id_usuario}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                    <a href="../php/delete_users.php?id=${user.id_usuario}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
                 </td>
             `;
             userTable.appendChild(row);

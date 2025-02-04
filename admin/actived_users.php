@@ -25,9 +25,10 @@ $email = strstr($email, '@', true);
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="../index.php">NetHub</a>
-    <div class="navbar-nav mx-auto">
+        <div class="navbar-nav mx-auto">
             <a class="nav-link active" href="">Usuarios activos</a>
             <a class="nav-link" href="disabled_users.php">Usuarios deshabilitados</a>
+            <a class="nav-link" href="../admin/show_movies.php">Películas</a>
         </div>
         <div class="navbar-nav ms-auto">
             <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
@@ -38,17 +39,16 @@ $email = strstr($email, '@', true);
     </div>
 </nav>
 
-<div class="container mt-4">
-    <h5>Buscar usuarios</h5>
-    <div class="row mb-3">
-        <div class="col-md-4 position-relative">
-            <input type="text" id="emailSearch" class="form-control pe-5" placeholder="Buscar por email...">
-            <span id="clearSearch" class="position-absolute top-50 end-0 translate-middle-y pe-3 cursor-pointer" style="display:none;">
-                <i class="fas fa-times"></i>
-            </span>
-        </div>
-</div>
-
+    <div class="container mt-4">
+        <h5>Buscar usuarios</h5>
+        <div class="row mb-3">
+            <div class="col-md-4 position-relative">
+                <input type="text" id="emailSearch" class="form-control pe-5" placeholder="Buscar por email">
+                <span id="clearSearch" class="position-absolute top-50 end-0 translate-middle-y pe-3 cursor-pointer" style="display:none;">
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+    </div>
     
     <?php if (empty($usuarios)): ?>
         <div class="alert alert-info text-center">No hay usuarios activos en este momento.</div>
@@ -70,5 +70,6 @@ $email = strstr($email, '@', true);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/filter_user_active.js"></script>
+<script src="../js/sweet_alerts.js"></script>
 </body>
 </html>

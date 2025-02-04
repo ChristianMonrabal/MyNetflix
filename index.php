@@ -9,7 +9,6 @@ if (isset($_SESSION['email'])) {
     $email = null;
 }
 
-// Obtener el Top 3 de películas con más likes
 $sqlTop3 = "
     SELECT p.id_pelicula, p.titulo, p.fecha_estreno, p.duracion, g.nombre AS genero, COUNT(l.id_like) AS total_likes
     FROM peliculas p
@@ -21,7 +20,6 @@ $sqlTop3 = "
 ";
 $resultTop3 = $pdo->query($sqlTop3);
 
-// Obtener las películas organizadas por género
 $sqlGeneros = "
     SELECT p.id_pelicula, p.titulo, p.fecha_estreno, p.duracion, g.nombre AS genero, COUNT(l.id_like) AS total_likes
     FROM peliculas p
@@ -57,7 +55,6 @@ while ($row = $resultGeneros->fetch(PDO::FETCH_ASSOC)) {
             <p>No has iniciado sesión. <a href="./public/signin.php">Inicia sesión aquí</a>.</p>
         <?php endif; ?>
 
-        <!-- Top 3 Películas Más Populares -->
         <h2 class="mt-5">Top 3 Películas Más Populares</h2>
         <div class="row mt-3">
             <?php 
@@ -81,7 +78,6 @@ while ($row = $resultGeneros->fetch(PDO::FETCH_ASSOC)) {
             endwhile; ?>
         </div>
 
-        <!-- Películas organizadas por género -->
         <h2 class="mt-5">Películas por Género</h2>
         <?php foreach ($peliculasPorGenero as $genero => $peliculas): ?>
             <h3 class="mt-4"><?php echo $genero; ?></h3>
@@ -99,8 +95,6 @@ while ($row = $resultGeneros->fetch(PDO::FETCH_ASSOC)) {
                 <?php endforeach; ?>
             </div>
         <?php endforeach; ?>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
