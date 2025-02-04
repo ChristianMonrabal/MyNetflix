@@ -13,7 +13,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $target_dir = "../img/carteleras/";
     $imageFileType = strtolower(pathinfo($imagen_cartelera["name"], PATHINFO_EXTENSION));
-    $target_file = $target_dir . preg_replace('/[^A-Za-z0-9_\-]/', '_', $titulo) . '.' . $imageFileType;
+
+    $imagen_nombre = preg_replace('/[^A-Za-z0-9_\-]/', '_', $titulo) . '.' . $imageFileType;
+    $target_file = $target_dir . $imagen_nombre;
 
     $check = getimagesize($imagen_cartelera["tmp_name"]);
     if ($check === false) {
@@ -24,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         die("Lo siento, el archivo ya existe.");
     }
 
-    if ($imagen_cartelera["size"] > 5000000) { // 5MB
+    if ($imagen_cartelera["size"] > 5000000) {
         die("Lo siento, el archivo es demasiado grande.");
     }
 
@@ -45,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->bindParam(':id_director', $id_director);
     $stmt->bindParam(':fecha_estreno', $fecha_estreno);
     $stmt->bindParam(':duracion', $duracion);
-    $stmt->bindParam(':imagen_cartelera', $target_file);
+    $stmt->bindParam(':imagen_cartelera', $imagen_nombre);
     $stmt->bindParam(':description_pelicula', $description_pelicula);
 
     if ($stmt->execute()) {

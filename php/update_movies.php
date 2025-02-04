@@ -34,7 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
             }
 
             $imageFileType = strtolower(pathinfo($imagen_cartelera["name"], PATHINFO_EXTENSION));
-            $target_file = $target_dir . preg_replace('/[^A-Za-z0-9_\-]/', '_', $titulo) . '.' . $imageFileType;
+            $imagen_nombre = preg_replace('/[^A-Za-z0-9_\-]/', '_', $titulo) . '.' . $imageFileType;
+            $target_file = $target_dir . $imagen_nombre;
 
             $check = getimagesize($imagen_cartelera["tmp_name"]);
             if ($check === false) {
@@ -60,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
 
             $sql = "UPDATE peliculas SET imagen_cartelera = :imagen_cartelera WHERE id_pelicula = :id_pelicula";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':imagen_cartelera', $target_file);
+            $stmt->bindParam(':imagen_cartelera', $imagen_nombre);
             $stmt->bindParam(':id_pelicula', $id_pelicula);
             $stmt->execute();
         }
