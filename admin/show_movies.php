@@ -2,6 +2,11 @@
 session_start();
 require_once '../includes/conexion.php';
 
+if (!isset($_SESSION['ADMIN']) || $_SESSION['ADMIN'] !== true) {
+    header('Location: ../index.php');
+    exit();
+}
+
 $email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
 $email = strstr($email, '@', true);
 

@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${user.email}</td>
                 <td>${user.fecha_registro}</td>
                 <td>
-                    <a href="../php/active_users.php?id=${user.id_usuario}" class="btn btn-warning btn-sm">Activar</a>
+                    <a href="../php/active_users.php?id=${user.id_usuario}" class="btn btn-success btn-sm">Activar</a>
                     <a href="../php/delete_users.php?id=${user.id_usuario}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
                 </td>
             `;
@@ -70,6 +70,5 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     setInterval(loadAllUsers, 2000);
-
     loadAllUsers();
 });
