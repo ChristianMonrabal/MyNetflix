@@ -5,8 +5,14 @@ require_once '../includes/conexion.php';
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
     $email = strstr($email, '@', true);
+
+    $sql_usuario = "SELECT id_usuario FROM usuarios WHERE email = :email";
+    $stmt_usuario = $pdo->prepare($sql_usuario);
+    $stmt_usuario->execute(['email' => $_SESSION['email']]);
+    $usuario = $stmt_usuario->fetch(PDO::FETCH_ASSOC);
+    $id_usuario = $usuario['id_usuario'];
 } else {
-    $email = null;
+    $id_usuario = null;
 }
 
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
@@ -15,6 +21,11 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 }
 
 $id_pelicula = $_GET['id'];
+
+$sql_check_like = "SELECT COUNT(*) FROM likes WHERE id_usuario = :id_usuario AND id_pelicula = :id_pelicula";
+$stmt_check_like = $pdo->prepare($sql_check_like);
+$stmt_check_like->execute(['id_usuario' => $id_usuario, 'id_pelicula' => $id_pelicula]);
+$like_exists = $stmt_check_like->fetchColumn();
 
 $sql = "
     SELECT p.titulo, p.fecha_estreno, p.duracion, p.imagen_cartelera, p.description_pelicula, 
@@ -76,7 +87,12 @@ if (!$pelicula) {
     </nav>
 
     <div class="container mt-5">
+        <a href="../index.php" class="btn btn-outline-light">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <div class="row">
+            <div class="col-12 text-center mb-3">
+            </div>
             <div class="col-md-4">
                 <img src="../img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
             </div>
@@ -88,6 +104,21 @@ if (!$pelicula) {
                 <p><strong>Director:</strong> <?php echo htmlspecialchars($pelicula['director']); ?></p>
                 <p><strong>Fecha de estreno:</strong> <?php echo htmlspecialchars($pelicula['fecha_estreno']); ?></p>
                 <p><strong>Duración:</strong> <?php echo htmlspecialchars($pelicula['duracion']); ?> min</p>
+
+                <?php if ($id_usuario): ?>
+                    <form action="../php/likes.php" method="POST">
+                        <input type="hidden" name="id_pelicula" value="<?php echo $id_pelicula; ?>">
+                        <?php if ($like_exists): ?>
+                            <button type="submit" name="action" value="remove" class="btn btn-outline-light">
+                                <i class="fas fa-thumbs-down"></i> Quitar like
+                            </button>
+                        <?php else: ?>
+                            <button type="submit" name="action" value="add" class="btn btn-outline-light">
+                                <i class="fas fa-thumbs-up"></i> Me gusta
+                            </button>
+                        <?php endif; ?>
+                    </form>
+                <?php endif; ?>
             </div>
         </div>
     </div>

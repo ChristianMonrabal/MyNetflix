@@ -31,6 +31,8 @@ $peliculasPorGenero = [];
 while ($row = $resultGeneros->fetch(PDO::FETCH_ASSOC)) {
     $peliculasPorGenero[$row['genero']][] = $row;
 }
+
+$isTop5Empty = $resultTop5->rowCount() === 0;
 ?>
 
 <!DOCTYPE html>
@@ -76,15 +78,34 @@ while ($row = $resultGeneros->fetch(PDO::FETCH_ASSOC)) {
     <div class="container mt-5">
         <h2 class="mt-5 text-center">Las 5 películas más populares en España</h2>
         <br>
-        <div class="row d-flex justify-content-center">
-            <?php while ($row = $resultTop5->fetch(PDO::FETCH_ASSOC)): ?>
-                <div class="col-md-2 mb-4">
-                    <a href="./public/show_movie.php?id=<?php echo $row['id_pelicula']; ?>" class="carteleras">
-                        <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
-                    </a>
+
+        <?php if ($isTop5Empty): ?>
+            <p class="text-center">No hay likes en ninguna película.</p>
+        <?php else: ?>
+            <div class="row d-flex justify-content-center">
+                <?php 
+                    $peliculas = [];
+                    while ($row = $resultTop5->fetch(PDO::FETCH_ASSOC)): 
+                        $peliculas[] = $row;
+                    endwhile;
+                    
+                    foreach ($peliculas as $row): ?>
+                        <div class="col-md-2 mb-4 text-center">
+                            <a href="./public/show_movie.php?id=<?php echo $row['id_pelicula']; ?>" class="carteleras">
+                                <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endwhile; ?>
-        </div>
+
+                <div class="row d-flex justify-content-center">
+                    <?php foreach ($peliculas as $row): ?>
+                        <div class="col-md-2 mb-4 text-center">
+                            <p class="mt-2 text-white"><?php echo htmlspecialchars($row['total_likes']); ?> likes</p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
 
         <?php foreach ($peliculasPorGenero as $genero => $peliculas): ?>
             <h3 class="mt-4"><?php echo htmlspecialchars($genero); ?></h3>
