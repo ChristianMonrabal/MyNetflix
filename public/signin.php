@@ -20,13 +20,13 @@ unset($_SESSION['error'], $_SESSION['email']);
             <form action="../php/access.php" method="POST">
                 <div class="input-group">
                     <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($email); ?>">
+                    <input type="email" id="email" name="email" placeholder="Introduce tu correo electrónico" value="<?php echo htmlspecialchars($email);?>">
                 </div>
                 <div class="input-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password">
+                    <input type="password" id="password" name="password" placeholder="Introduce tu contraseña">
                 </div>
-                <?php if (!empty($error)): ?>
+                                <?php if (!empty($error)): ?>
                     <p class="error"><?php echo htmlspecialchars($error); ?></p>
                 <?php endif; ?>
                 <button type="submit" class="btn-submit">Iniciar sesión</button>

@@ -20,24 +20,31 @@ $email = strstr($email, '@', true);
     <title>Usuarios Activos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/movile/actived_users.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="../index.php">NetHub</a>
-        <div class="navbar-nav mx-auto">
-            <a class="nav-link active" href="">Usuarios activos</a>
-            <a class="nav-link" href="disabled_users.php">Usuarios deshabilitados</a>
-            <a class="nav-link" href="../admin/show_movies.php">Películas</a>
-        </div>
-        <div class="navbar-nav ms-auto">
-            <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
-            <a href="../php/logout.php" class="nav-link text-white">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav mx-auto">
+                <a class="nav-link active" href="">Usuarios activos</a>
+                <a class="nav-link" href="disabled_users.php">Usuarios deshabilitados</a>
+                <a class="nav-link" href="../admin/show_movies.php">Películas</a>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
+                <a href="../php/logout.php" class="nav-link text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
+
 
     <div class="container mt-4">
         <h5>Buscar usuarios</h5>
@@ -70,6 +77,5 @@ $email = strstr($email, '@', true);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/filter_user_active.js"></script>
-<script src="../js/sweet_alerts.js"></script>
 </body>
 </html>

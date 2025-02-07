@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
                 unlink($target_file);
             }
 
-            if ($imagen_cartelera["size"] > 5000000) {
+            if ($imagen_cartelera["size"] > 50000000000) {
                 die("Lo siento, el archivo es demasiado grande.");
             }
 

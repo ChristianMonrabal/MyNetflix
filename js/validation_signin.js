@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const emailField = document.getElementById("email");
-    const passwordField = document.getElementById("password");
+    emailField = document.getElementById("email");
+    passwordField = document.getElementById("password");
 
-    function validateField(field, fieldName) {
-        const errorMessage = document.createElement("p");
+    function validateField(field, message) {
+        errorMessage = document.createElement("p");
         errorMessage.style.color = "red";
 
-        const previousError = field.parentElement.querySelector(".error-message");
+        previousError = field.parentElement.querySelector(".error-message");
         if (previousError) {
             previousError.remove();
         }
 
         if (field.value.trim() === "") {
             field.style.borderColor = "red";
-            errorMessage.textContent = `${fieldName} no puede estar vacío.`;
+            errorMessage.textContent = message;
             errorMessage.classList.add("error-message");
             field.parentElement.appendChild(errorMessage);
         } else {
@@ -21,11 +21,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    emailField.addEventListener("blur", function () {
-        validateField(emailField, "El correo electrónico");
-    });
+    function validateEmail() {
+        validateField(emailField, "El correo electrónico no puede estar vacío.");
+        if (emailField.value.trim() !== "" && !emailField.value.includes("@")) {
+            validateField(emailField, "El correo electrónico debe contener '@'.");
+        }
+    }
 
-    passwordField.addEventListener("blur", function () {
-        validateField(passwordField, "La contraseña");
-    });
+    function validatePassword() {
+        validateField(passwordField, "La contraseña no puede estar vacía.");
+        if (passwordField.value.trim() !== "" && passwordField.value.length < 8) {
+            validateField(passwordField, "La contraseña debe tener al menos 8 caracteres.");
+        }
+    }
+
+    emailField.addEventListener("blur", validateEmail);
+    passwordField.addEventListener("blur", validatePassword);
 });

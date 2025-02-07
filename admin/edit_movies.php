@@ -58,15 +58,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                             <input type="hidden" name="imagen_cartelera_actual" value="<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>">
                             <div class="mb-3">
                                 <label for="titulo" class="form-label">Título</label>
-                                <input type="text" class="form-control" id="titulo" name="titulo" value="<?php echo htmlspecialchars($pelicula['titulo']); ?>" required>
+                                <input type="text" class="form-control" id="titulo" name="titulo" value="<?php echo htmlspecialchars($pelicula['titulo']); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripción</label>
-                                <textarea class="form-control" id="descripcion" name="descripcion" required><?php echo htmlspecialchars($pelicula['description_pelicula']); ?></textarea>
+                                <textarea class="form-control" id="descripcion" name="descripcion"><?php echo htmlspecialchars($pelicula['description_pelicula']); ?></textarea>
                                 </div>
                             <div class="mb-3">
                                 <label for="id_genero" class="form-label">Género</label>
-                                <select class="form-select" id="id_genero" name="id_genero" required>
+                                <select class="form-select" id="id_genero" name="id_genero">
                                     <?php
                                     $sqlGeneros = "SELECT * FROM generos";
                                     $resultGeneros = $pdo->query($sqlGeneros);
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="id_director" class="form-label">Director</label>
-                                <select class="form-select" id="id_director" name="id_director" required>
+                                <select class="form-select" id="id_director" name="id_director">
                                     <?php
                                     $sqlDirectores = "SELECT * FROM directores";
                                     $resultDirectores = $pdo->query($sqlDirectores);
@@ -88,11 +88,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="fecha_estreno" class="form-label">Fecha de Estreno</label>
-                                <input type="date" class="form-control" id="fecha_estreno" name="fecha_estreno" value="<?php echo htmlspecialchars($pelicula['fecha_estreno']); ?>" required>
+                                <input type="date" class="form-control" id="fecha_estreno" name="fecha_estreno" value="<?php echo htmlspecialchars($pelicula['fecha_estreno']); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="duracion" class="form-label">Duración (minutos)</label>
-                                <input type="number" class="form-control" id="duracion" name="duracion" value="<?php echo htmlspecialchars($pelicula['duracion']); ?>" required>
+                                <input type="number" class="form-control" id="duracion" name="duracion" value="<?php echo htmlspecialchars($pelicula['duracion']); ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="imagen_cartelera" class="form-label">Imagen de Cartelera</label>
@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/validation_edit_movies.js"></script>
 </body>
 </html>
