@@ -78,30 +78,28 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
     <link rel="stylesheet" href="./css//desktop/index.css">
 </head>
 
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">NetHub</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<body style="background-color: rgba(13, 27, 42, 1);">
+    <nav class="navbar navbar-custom navbar-expand-lg">
+        <div class="container-fluid">
+            <a style="color: rgba(211, 211, 211, 1);" class="navbar-brand" href="#">NetHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <div class="navbar-nav mx-auto">
-                    <a class="nav-link active" href="index.php">Inicio</a>
-                    <a class="nav-link" href="series.php">Series</a>
-                    <a class="nav-link" href="peliculas.php">Películas</a>
-                    <a class="nav-link" href="novedades.php">Novedades</a>
-                    <a class="nav-link" href="mi_lista.php">Mi Lista</a>
-                </div>
-                <div class="navbar-nav ms-auto">
-                    <?php if ($email): ?>
-                        <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
-                        <a href="php/logout.php" class="nav-link text-white">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
-                    <?php else: ?>
-                        <a href="public/signin.php" class="nav-link text-white">Iniciar sesión</a>
-                    <?php endif; ?>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                </ul>
+                <form class="d-flex me-auto" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button style="color: rgba(211, 211, 211, 1);" class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+                <div class="dropdown">
+                    <button class="usuario-logueado dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user me-2"></i>
+                        <?= htmlspecialchars($email) ?>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                        <li><a class="dropdown-item" href="./php/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -140,32 +138,27 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
         </div>
     </div>
     <div class="container mt-5">
-        <h2 class="mt-5 text-center">Las 5 películas más populares en España</h2>
-        <br>
+        <?php if (!$email): ?>
 
-        <?php if ($isTop5Empty): ?>
-            <p class="text-center">No hay likes en ninguna película.</p>
-        <?php else: ?>
-            <div class="row d-flex justify-content-center">
-                <?php 
-                    $peliculas = [];
-                    while ($row = $resultTop5->fetch(PDO::FETCH_ASSOC)): 
-                        $peliculas[] = $row;
-                    endwhile;
-                    
-                    foreach ($peliculas as $row): ?>
-                        <div class="col-md-2 mb-4 text-center">
-                            <a href="./public/show_movie.php?id=<?php echo $row['id_pelicula']; ?>" class="carteleras">
-                                <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
+            <h1 class="mb-4">Bienvenido</h1>
+            <p>No has iniciado sesión. <a href="./public/signin.php">Inicia sesión aquí</a>.</p>
+        <?php endif; ?>
 
-                <div class="row d-flex justify-content-center">
-                    <?php foreach ($peliculas as $row): ?>
-                        <div class="col-md-2 mb-4 text-center">
-                            <p class="mt-2 text-white"><?php echo htmlspecialchars($row['total_likes']); ?> likes</p>
+        <h2 class="mt-5">Top 3 Películas Más Populares</h2>
+        <div class="row mt-3">
+            <?php
+            $top = 1;
+            while ($row = $resultTop3->fetch(PDO::FETCH_ASSOC)): ?>
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $row['titulo']; ?></h5>
+                            <p class="card-text"><?php echo $row['genero']; ?> - <?php echo $row['fecha_estreno']; ?></p>
+                            <p class="card-text">Duración: <?php echo $row['duracion']; ?> min</p>
+                            <p class="text-muted">👍 <?php echo $row['total_likes']; ?> Me gusta</p>
+                            <div class="display-1 text-primary">
+                                <?php echo $top; ?>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
