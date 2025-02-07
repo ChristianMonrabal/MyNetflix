@@ -16,11 +16,11 @@
             <form action="../php/add_users.php" method="POST">
                 <div class="input-group">
                     <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email">
+                    <input type="email" id="email" name="email" placeholder="Introduce tu correo electrónico">
                 </div>
                 <div class="input-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password">
+                    <input type="password" id="password" name="password" placeholder="Introduce tu contraseña">
                 </div>
                 <button type="submit" class="btn-submit">Registrar</button>
             </form>

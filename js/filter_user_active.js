@@ -58,5 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    setInterval(loadAllUsers, 2000);
     loadAllUsers();
 });
