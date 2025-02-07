@@ -71,11 +71,74 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                     <?php else: ?>
                         <a href="public/signin.php" class="nav-link text-white">Iniciar sesión</a>
                     <?php endif; ?>
+    <title>NetHub</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="./css//desktop/index.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">NetHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav mx-auto">
+                    <a class="nav-link active" href="index.php">Inicio</a>
+                    <a class="nav-link" href="series.php">Series</a>
+                    <a class="nav-link" href="peliculas.php">Películas</a>
+                    <a class="nav-link" href="novedades.php">Novedades</a>
+                    <a class="nav-link" href="mi_lista.php">Mi Lista</a>
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <?php if ($email): ?>
+                        <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
+                        <a href="php/logout.php" class="nav-link text-white">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    <?php else: ?>
+                        <a href="public/signin.php" class="nav-link text-white">Iniciar sesión</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
     </nav>
+    <div class="container mt-5">
+        <h2 class="mt-5 text-center">Las 5 películas más populares en España</h2>
+        <br>
+        <?php if ($isTop5Empty): ?>
+            <p class="text-center">No hay likes en ninguna película.</p>
+        <?php else: ?>
+            <div class="row d-flex justify-content-center">
+                <?php 
+                    $peliculas = [];
+                    while ($row = $resultTop5->fetch(PDO::FETCH_ASSOC)): 
+                        $peliculas[] = $row;
+                    endwhile;
+                    
+                    foreach ($peliculas as $row): ?>
+                        <div class="col-md-2 mb-4 text-center">
+                            <a href="./public/show_movie.php?id=<?php echo $row['id_pelicula']; ?>" class="carteleras">
+                                <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
 
+                <div class="row d-flex justify-content-center">
+                    <?php foreach ($peliculas as $row): ?>
+                        <div class="col-md-2 mb-4 text-center">
+                            <p class="mt-2 text-white"><?php echo htmlspecialchars($row['total_likes']); ?> likes</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-center">
+                <h1 id="titleIn" class="text-center text-white mt-5">Top 5 más gustadas</h1>
+            </div>
+        </div>
+    </div>
     <div class="container mt-5">
         <h2 class="mt-5 text-center">Las 5 películas más populares en España</h2>
         <br>
@@ -107,7 +170,10 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
-
+            <?php
+                $top++;
+            endwhile; ?>
+        </div>
         <?php foreach ($peliculasPorGenero as $genero => $peliculas): ?>
             <h3 class="mt-4"><?php echo htmlspecialchars($genero); ?></h3>
             <div class="row">
@@ -124,5 +190,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
+</html>
+=======
+</body>
 </html>
