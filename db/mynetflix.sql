@@ -94,26 +94,6 @@ INSERT INTO peliculas (titulo, id_genero, id_director, fecha_estreno, duracion, 
 ('Pan’s Labyrinth', 7, 8, '2006-10-11', 118, 'pans_labyrinth_poster.jpg', 'Una niña se sumerge en un mundo de criaturas fantásticas en la España de la posguerra.'),
 ('The Lord of the Rings: The Fellowship of the Ring', 7, 10, '2001-12-19', 178, 'lotr_fellowship_poster.jpg', 'Un hobbit debe destruir un anillo mágico antes de que caiga en manos del malvado Sauron.');
 
-INSERT INTO peliculas (titulo, id_genero, id_director, fecha_estreno, duracion, imagen_cartelera, description_pelicula) VALUES
-('The Matrix', 4, 1, '1999-03-31', 136, 'matrix_poster.jpg', 'Un programador de computadoras descubre que la realidad que percibe es en realidad una simulación creada por máquinas para controlar a la humanidad.'),
-('Mad Max: Fury Road', 4, 1, '2015-05-15', 120, 'mad_max_fury_road_poster.jpg', 'En un futuro post-apocalíptico, un hombre y una mujer luchan por sobrevivir mientras escapan de un dictador tiránico.'),
-('The Shawshank Redemption', 2, 1, '1994-09-22', 142, 'shawshank_poster.jpg', 'Un hombre condenado injustamente por asesinato encuentra la esperanza mientras está en prisión.'),
-('Spider-Man: Into the Spider-Verse', 9, 1, '2018-12-14', 117, 'spiderverse_poster.jpg', 'Un adolescente de Brooklyn se convierte en Spider-Man y se une a otros Spider-People de universos alternativos para enfrentar a un villano peligroso.'),
-('Shutter Island', 8, 1, '2010-02-19', 138, 'shutter_island_poster.jpg', 'Un detective investiga la desaparición de una paciente en un hospital psiquiátrico aislado, donde descubre secretos oscuros.'),
-('La La Land', 9, 1, '2016-12-09', 128, 'lalaland_poster.jpg', 'Dos artistas en Los Ángeles luchan por encontrar el éxito y el amor mientras navegan por los altibajos de la vida.'),
-('The Conjuring', 5, 1, '2013-07-19', 112, 'conjuring_poster.jpg', 'Un par de investigadores paranormales ayudan a una familia aterrada por presencias malévolas en su hogar.'),
-('The Lion King', 9, 1, '1994-06-24', 88, 'lion_king_poster.jpg', 'Un joven león es desterrado de su hogar y debe aprender a aceptar su destino como rey mientras enfrenta peligros y traiciones.'),
-('Star Wars: A New Hope', 4, 1, '1977-05-25', 121, 'star_wars_hope_poster.jpg', 'Un joven granjero se une a una princesa y a un contrabandista para rescatar a la galaxia del Imperio Galáctico.'),
-('Deadpool', 4, 1, '2016-02-12', 108, 'deadpool_poster.jpg', 'Un ex-soldado con habilidades curativas y un humor irreverente lucha contra el crimen mientras busca vengarse de su pasado.'),
-('Frozen', 9, 1, '2013-11-27', 102, 'frozen_poster.jpg', 'Dos hermanas se embarcan en una aventura épica para salvar su reino de un invierno eterno causado por uno de sus propios poderes mágicos.'),
-('The Avengers', 4, 1, '2012-05-04', 143, 'avengers_poster.jpg', 'Los superhéroes más poderosos del planeta se unen para salvar el mundo de una invasión alienígena.'),
-('Guardians of the Galaxy', 4, 1, '2014-08-01', 121, 'guardians_of_the_galaxy_poster.jpg', 'Un grupo de inadaptados se une para robar un artefacto poderoso y evitar que caiga en las manos equivocadas.'),
-('The Silence of the Lambs', 8, 1, '1991-02-14', 118, 'silence_of_the_lambs_poster.jpg', 'Una joven agente del FBI se enfrenta a un asesino en serie mientras consulta con un caníbal encarcelado para atrapar al criminal.'),
-('Inglourious Basterds', 4, 1, '2009-08-21', 153, 'inglourious_basterds_poster.jpg', 'Un grupo de soldados judíos-americanos lleva a cabo misiones de venganza durante la Segunda Guerra Mundial.'),
-('The Revenant', 4, 1, '2015-12-25', 156, 'revenant_poster.jpg', 'Un hombre herido y abandonado en el desierto lucha por sobrevivir y vengarse de aquellos que lo dejaron morir.'),
-('The Social Network', 2, 1, '2010-10-01', 120, 'social_network_poster.jpg', 'La historia del surgimiento de Facebook y las disputas legales que siguieron a su éxito.'),
-('Toy Story 3', 9, 1, '2010-06-18', 103, 'toy_story_3_poster.jpg', 'Los juguetes de Andy enfrentan su futuro incierto cuando él se prepara para ir a la universidad y sus amigos deben encontrar un nuevo hogar.');
-
 INSERT INTO reparto (id_pelicula, id_actor, personaje) VALUES
 (1, 1, 'Dom Cobb'),
 (1, 14, 'Alfred Pennyworth'),
@@ -134,12 +114,3 @@ INSERT INTO reparto (id_pelicula, id_actor, personaje) VALUES
 (15, 20, 'Frodo Baggins'),
 (15, 21, 'Gandalf'),
 (15, 22, 'Aragorn');
-
-INSERT INTO likes (id_usuario, id_pelicula) VALUES
-(1, 1),
-(2, 1),
-(2, 2),
-(3, 3),
-(1, 3),
-(1, 2),
-(2, 3);
