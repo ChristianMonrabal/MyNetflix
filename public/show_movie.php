@@ -2,6 +2,11 @@
 session_start();
 require_once '../includes/conexion.php';
 
+if (!isset($_SESSION['LOGGEDIN']) || $_SESSION['LOGGEDIN'] !== true) {
+    header("Location: signin.php");
+    exit();
+}
+
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
     $email = strstr($email, '@', true);
@@ -104,13 +109,19 @@ if (!$pelicula) {
                 <p><strong>Director:</strong> <?php echo htmlspecialchars($pelicula['director']); ?></p>
                 <p><strong>Fecha de estreno:</strong> <?php echo htmlspecialchars($pelicula['fecha_estreno']); ?></p>
                 <p><strong>Duración:</strong> <?php echo htmlspecialchars($pelicula['duracion']); ?> min</p>
-
+                
+                <a href="https://www.youtube.com/results?search_query=<?php echo urlencode($pelicula['titulo'] . ' trailer'); ?>" 
+                    target="_blank" 
+                    class="btn btn-danger">
+                    <i class="fab fa-youtube"></i> Ver tráiler
+                </a>
+                <br><br>
                 <?php if ($id_usuario): ?>
                     <form action="../php/likes.php" method="POST">
                         <input type="hidden" name="id_pelicula" value="<?php echo $id_pelicula; ?>">
                         <?php if ($like_exists): ?>
                             <button type="submit" name="action" value="remove" class="btn btn-outline-light">
-                                <i class="fas fa-thumbs-down"></i> Quitar like
+                                <i class="fas fa-thumbs-down"></i> No me gusta
                             </button>
                         <?php else: ?>
                             <button type="submit" name="action" value="add" class="btn btn-outline-light">
