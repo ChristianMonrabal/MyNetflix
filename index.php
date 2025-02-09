@@ -79,7 +79,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                     <a class="nav-link" href="">Series</a>
                     <a class="nav-link" href="">Películas</a>
                     <a class="nav-link" href="./public/news.php">Novedades</a>
-                    <a class="nav-link" href="./public/mylist.php">Mi Lista</a>
+                    <a class="nav-link" href="./public/mylist.php">Mi lista</a>
                     <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
                         <a class="nav-link" href="./admin/actived_users.php">Panel de administración</a>
                     <?php endif; ?>

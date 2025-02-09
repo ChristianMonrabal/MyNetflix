@@ -2,6 +2,11 @@
 session_start();
 require_once '../includes/conexion.php';
 
+if (!isset($_SESSION['LOGGEDIN']) || $_SESSION['LOGGEDIN'] !== true) {
+    header("Location: signin.php");
+    exit();
+}
+
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
     $email = strstr($email, '@', true);
@@ -79,7 +84,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                     <a class="nav-link" href="">Series</a>
                     <a class="nav-link" href="">Películas</a>
                     <a class="nav-link" href="./news.php">Novedades</a>
-                    <a class="nav-link active" href="">Mi Lista</a>
+                    <a class="nav-link active" href="">Mi lista</a>
                     <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
                         <a class="nav-link" href="../admin/actived_users.php">Panel de administración</a>
                     <?php endif; ?>

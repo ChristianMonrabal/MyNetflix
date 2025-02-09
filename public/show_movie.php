@@ -75,7 +75,7 @@ if (!$pelicula) {
                     <a class="nav-link" href="../series.php">Series</a>
                     <a class="nav-link" href="../peliculas.php">Películas</a>
                     <a class="nav-link" href="../novedades.php">Novedades</a>
-                    <a class="nav-link" href="../mi_lista.php">Mi Lista</a>
+                    <a class="nav-link" href="../mi_lista.php">Mi lista</a>
                 </div>
                 <div class="navbar-nav ms-auto">
                     <?php if ($email): ?>
