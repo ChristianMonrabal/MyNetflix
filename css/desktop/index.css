@@ -115,3 +115,21 @@ nav {
     border-radius: 10px;
     transition: transform 0.3s ease-in-out;
 }
+
+.btn-danger {
+    background-color: transparent;
+    color: white;
+    text-decoration: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid #e50914;
+    border-radius: 5px;
+    transition: color 0.3s ease-in-out, border-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    display: inline-block;
+}
+
+.btn-danger:hover {
+    border-color: #b20710;
+    transform: scale(1.05);
+}

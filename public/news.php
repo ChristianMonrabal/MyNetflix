@@ -9,12 +9,12 @@ if (isset($_SESSION['email'])) {
     $email = null;
 }
 
-// Obtener las películas ordenadas por fecha de estreno (más nuevas a más antiguas)
 $sqlPeliculas = "
     SELECT p.id_pelicula, p.titulo, p.imagen_cartelera, p.fecha_estreno
     FROM peliculas p
-    ORDER BY p.fecha_estreno DESC;
+    ORDER BY p.id_pelicula DESC;
 ";
+
 $resultPeliculas = $pdo->query($sqlPeliculas);
 
 $peliculas = $resultPeliculas->fetchAll(PDO::FETCH_ASSOC);
@@ -55,7 +55,7 @@ if (isset($_SESSION['email'])) {
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">NetHub</a>
+            <a class="navbar-brand" href="../index.php">NetHub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -71,6 +71,9 @@ if (isset($_SESSION['email'])) {
                     <?php endif; ?>
                 </div>
                 <div class="navbar-nav ms-auto">
+                    <a href="search.php" class="btn btn-outline-light">
+                        <i class="fas fa-search"></i>
+                    </a>
                     <?php if ($email): ?>
                         <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
                         <a href="../php/logout.php" class="nav-link text-white">

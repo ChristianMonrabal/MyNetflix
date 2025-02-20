@@ -7,57 +7,44 @@ if (!isset($_SESSION['LOGGEDIN']) || $_SESSION['LOGGEDIN'] !== true) {
     exit();
 }
 
-if (isset($_SESSION['email'])) {
-    $email = $_SESSION['email'];
-    $email = strstr($email, '@', true);
-} else {
-    $email = null;
-}
+$email = $_SESSION['email'] ?? null;
+$email = $email ? strstr($email, '@', true) : null;
 
-$sqlTop5 = "
-    SELECT p.id_pelicula, p.titulo, p.imagen_cartelera, COUNT(l.id_like) AS total_likes
-    FROM peliculas p
-    LEFT JOIN likes l ON p.id_pelicula = l.id_pelicula
-    GROUP BY p.id_pelicula
-    ORDER BY total_likes DESC
-    LIMIT 5;
-";
-$resultTop5 = $pdo->query($sqlTop5);
-
-$sqlGeneros = "
-    SELECT p.id_pelicula, p.titulo, p.imagen_cartelera, g.nombre AS genero
-    FROM peliculas p
-    JOIN generos g ON p.id_genero = g.id_genero
-    ORDER BY g.nombre, p.titulo;
-";
-$resultGeneros = $pdo->query($sqlGeneros);
-
-$peliculasPorGenero = [];
-while ($row = $resultGeneros->fetch(PDO::FETCH_ASSOC)) {
-    $peliculasPorGenero[$row['genero']][] = $row;
-}
-
-$peliculasLikeUsuario = [];
-if (isset($_SESSION['email'])) {
+$id_usuario = null;
+if ($email) {
     $sqlUsuario = "SELECT id_usuario FROM usuarios WHERE email = :email";
     $stmtUsuario = $pdo->prepare($sqlUsuario);
     $stmtUsuario->execute(['email' => $_SESSION['email']]);
     $usuario = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
-    $id_usuario = $usuario['id_usuario'];
-
-    $sqlLikesUsuario = "
-        SELECT p.id_pelicula, p.titulo, p.imagen_cartelera
-        FROM peliculas p
-        JOIN likes l ON p.id_pelicula = l.id_pelicula
-        WHERE l.id_usuario = :id_usuario
-        ORDER BY p.titulo;
-    ";
-    $stmtLikesUsuario = $pdo->prepare($sqlLikesUsuario);
-    $stmtLikesUsuario->execute(['id_usuario' => $id_usuario]);
-    $peliculasLikeUsuario = $stmtLikesUsuario->fetchAll(PDO::FETCH_ASSOC);
+    $id_usuario = $usuario['id_usuario'] ?? null;
 }
 
-$isTop5Empty = $resultTop5->rowCount() === 0;
+$mostrarLikes = isset($_GET['like']) ? $_GET['like'] === 'true' : true;
+
+if ($id_usuario) {
+    if ($mostrarLikes) {
+        $sqlPeliculas = "
+            SELECT p.id_pelicula, p.titulo, p.imagen_cartelera
+            FROM peliculas p
+            JOIN likes l ON p.id_pelicula = l.id_pelicula
+            WHERE l.id_usuario = :id_usuario
+            ORDER BY p.titulo;
+        ";
+    } else {
+        $sqlPeliculas = "
+            SELECT p.id_pelicula, p.titulo, p.imagen_cartelera
+            FROM peliculas p
+            WHERE p.id_pelicula NOT IN (
+                SELECT l.id_pelicula FROM likes l WHERE l.id_usuario = :id_usuario
+            )
+            ORDER BY p.titulo;
+        ";
+    }
+
+    $stmtPeliculas = $pdo->prepare($sqlPeliculas);
+    $stmtPeliculas->execute(['id_usuario' => $id_usuario]);
+    $peliculas = $stmtPeliculas->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 
 <!DOCTYPE html>
@@ -74,7 +61,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
-            <a class="navbar-brand" href="index.php">NetHub</a>
+            <a class="navbar-brand" href="../index.php">NetHub</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -90,6 +77,9 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                     <?php endif; ?>
                 </div>
                 <div class="navbar-nav ms-auto">
+                    <a href="search.php" class="btn btn-outline-light">
+                        <i class="fas fa-search"></i>
+                    </a>
                     <?php if ($email): ?>
                         <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
                         <a href="../php/logout.php" class="nav-link text-white">
@@ -104,18 +94,26 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
     </nav>
     
     <div class="container mt-5">
-        <?php if (!empty($peliculasLikeUsuario)): ?>
-            <h3 class="mt-4">Películas que te han gustado</h3>
-            <div class="row">
-                <?php foreach ($peliculasLikeUsuario as $pelicula): ?>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3><?php echo $mostrarLikes ? "Películas que te han gustado" : "Películas que no has visto"; ?></h3>
+            <a href="?like=<?php echo $mostrarLikes ? 'false' : 'true'; ?>" class="btn btn-danger">
+                <?php echo $mostrarLikes ? "Películas que no has visto" : "Películas que has visto"; ?>
+            </a>
+    </div>
+
+        <div class="row">
+            <?php if (!empty($peliculas)): ?>
+                <?php foreach ($peliculas as $pelicula): ?>
                     <div class="col-md-2 mb-3">
                         <a href="./show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
                             <img src="../img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded-start" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
                         </a>
                     </div>
                 <?php endforeach; ?>
-            </div>
-        <?php endif; ?>
+            <?php else: ?>
+                <p class="text-center">No se encontraron películas en esta categoría.</p>
+            <?php endif; ?>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

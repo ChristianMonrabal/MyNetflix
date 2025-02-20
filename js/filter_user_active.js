@@ -2,10 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('emailSearch');
     const clearButton = document.getElementById('clearSearch');
     const userTable = document.getElementById('userTable');
+    let filterActive = false;
 
     searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.trim();
         clearButton.style.display = searchTerm ? 'block' : 'none';
+        filterActive = searchTerm.length > 0;
 
         if (searchTerm) {
             ajaxRequest(`../php/search_users_active.php?email=${searchTerm}`);
@@ -17,11 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
     clearButton.addEventListener('click', function() {
         searchInput.value = '';
         clearButton.style.display = 'none';
+        filterActive = false;
         loadAllUsers();
     });
 
     function loadAllUsers() {
-        ajaxRequest('../php/search_users_active.php');
+        if (!filterActive) {
+            ajaxRequest('../php/search_users_active.php');
+        }
     }
 
     function ajaxRequest(url) {
@@ -59,6 +64,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    setInterval(loadAllUsers, 2000);
+    setInterval(() => {
+        if (!filterActive) {
+            loadAllUsers();
+        }
+    }, 2000);
+
     loadAllUsers();
 });
