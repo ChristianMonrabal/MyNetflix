@@ -31,8 +31,8 @@ $email = strstr($email, '@', true);
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav mx-auto">
-                <a class="nav-link active" href="actived_users.php">Usuarios activos</a>
-                <a class="nav-link" href="">Usuarios deshabilitados</a>
+                <a class="nav-link" href="actived_users.php">Usuarios activos</a>
+                <a class="nav-link active" href="">Usuarios deshabilitados</a>
                 <a class="nav-link" href="../admin/show_movies.php">Películas</a>
             </div>
             <div class="navbar-nav ms-auto">
