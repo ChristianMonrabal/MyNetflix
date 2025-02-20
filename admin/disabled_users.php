@@ -26,16 +26,21 @@ $email = strstr($email, '@', true);
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="../index.php">NetHub</a>
-        <div class="navbar-nav mx-auto">
-            <a class="nav-link" href="actived_users.php">Usuarios activos</a>
-            <a class="nav-link active" href="">Usuarios deshabilitados</a>
-            <a class="nav-link" href="../admin/show_movies.php">Películas</a>
-        </div>
-        <div class="navbar-nav ms-auto">
-            <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
-            <a href="../php/logout.php" class="nav-link text-white">
-                <i class="fas fa-sign-out-alt"></i>
-            </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav mx-auto">
+                <a class="nav-link active" href="actived_users.php">Usuarios activos</a>
+                <a class="nav-link" href="">Usuarios deshabilitados</a>
+                <a class="nav-link" href="../admin/show_movies.php">Películas</a>
+            </div>
+            <div class="navbar-nav ms-auto">
+                <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
+                <a href="../php/logout.php" class="nav-link text-white">
+                    <i class="fas fa-sign-out-alt"></i>
+                </a>
+            </div>
         </div>
     </div>
 </nav>
