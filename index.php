@@ -57,6 +57,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -67,39 +68,47 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="index.php">NetHub</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="navbar-nav mx-auto">
-                <a class="nav-link active" href="index.php">Inicio</a>
-                <a class="nav-link" href="">Series</a>
-                <a class="nav-link" href="">Películas</a>
-                <a class="nav-link" href="./public/news.php">Novedades</a>
-                <a class="nav-link" href="./public/mylist.php">Mi lista</a>
-                <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
-                    <a class="nav-link" href="./admin/actived_users.php">Panel de administración</a>
-                <?php endif; ?>
-            </div>
-            <div class="navbar-nav ms-auto">
-                <a href="./public/search.php" class="btn btn-outline-light">
-                    <i class="fas fa-search"></i>
-                </a>
-                <?php if ($email): ?>
-                    <span class="nav-link text-white ms-3"><?php echo htmlspecialchars($email); ?></span>
-                    <a href="php/logout.php" class="nav-link text-white">
-                        <i class="fas fa-sign-out-alt"></i>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">NetHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav mx-auto">
+                    <a class="nav-link active" href="index.php">Inicio</a>
+                    <a class="nav-link" href="">Series</a>
+                    <a class="nav-link" href="">Películas</a>
+                    <a class="nav-link" href="./public/news.php">Novedades</a>
+                    <a class="nav-link" href="./public/mylist.php">Mi lista</a>
+                    <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
+                        <a class="nav-link" href="./admin/actived_users.php">Panel de administración</a>
+                    <?php endif; ?>
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <a href="./public/search.php" class="btn btn-outline-light">
+                        <i class="fas fa-search"></i>
                     </a>
-                <?php else: ?>
-                    <a href="public/signin.php" class="nav-link text-white">Iniciar sesión</a>
-                <?php endif; ?>
+                    <?php if ($email): ?>
+                        <div class="dropdown mx-4">
+                            <button class="usuario-logueado dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>
+                                <?= htmlspecialchars($email) ?>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="php/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
+                    <?php else: ?>
+                        <a href="public/signin.php" class="usuario-logueado text-decoration-none mx-4">
+                            <i class="fas fa-user me-2"></i>
+                            Iniciar sesión
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 
     <div class="container mt-5">
@@ -109,21 +118,21 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
             <p class="text-center">No hay likes en ninguna película.</p>
         <?php else: ?>
             <div class="row d-flex justify-content-center">
-                <?php 
-                    $peliculas = [];
-                    while ($row = $resultTop5->fetch(PDO::FETCH_ASSOC)): 
-                        $peliculas[] = $row;
-                    endwhile;
-                    
-                    foreach ($peliculas as $row): ?>
-                        <div class="col-md-2 mb-4 text-center">
-                            <a href="./public/show_movie.php?id=<?php echo $row['id_pelicula']; ?>" class="carteleras">
-                                <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
-                            </a>
-                        </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+                <?php
+                $peliculas = [];
+                while ($row = $resultTop5->fetch(PDO::FETCH_ASSOC)):
+                    $peliculas[] = $row;
+                endwhile;
+
+                foreach ($peliculas as $row): ?>
+                    <div class="col-md-2 mb-4 text-center">
+                        <a href="./public/show_movie.php?id=<?php echo $row['id_pelicula']; ?>" class="carteleras">
+                            <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
         <?php foreach ($peliculasPorGenero as $genero => $peliculas): ?>
             <h3 class="mt-4"><?php echo htmlspecialchars($genero); ?></h3>
@@ -141,4 +150,5 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

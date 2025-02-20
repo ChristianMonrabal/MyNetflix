@@ -49,6 +49,7 @@ if ($id_usuario) {
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,25 +82,33 @@ if ($id_usuario) {
                         <i class="fas fa-search"></i>
                     </a>
                     <?php if ($email): ?>
-                        <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
-                        <a href="../php/logout.php" class="nav-link text-white">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </a>
+                        <div class="dropdown mx-4">
+                            <button class="usuario-logueado dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user me-2"></i>
+                                <?= htmlspecialchars($email) ?>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="php/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                            </ul>
+                        </div>
                     <?php else: ?>
-                        <a href="public/signin.php" class="nav-link text-white">Iniciar sesión</a>
+                        <a href="public/signin.php" class="usuario-logueado text-decoration-none mx-4">
+                            <i class="fas fa-user me-2"></i>
+                            Iniciar sesión
+                        </a>
                     <?php endif; ?>
                 </div>
             </div>
         </div>
     </nav>
-    
+
     <div class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3><?php echo $mostrarLikes ? "Películas que te han gustado" : "Películas que no has visto"; ?></h3>
             <a href="?like=<?php echo $mostrarLikes ? 'false' : 'true'; ?>" class="btn btn-danger">
                 <?php echo $mostrarLikes ? "Películas que no has visto" : "Películas que has visto"; ?>
             </a>
-    </div>
+        </div>
 
         <div class="row">
             <?php if (!empty($peliculas)): ?>
@@ -118,4 +127,5 @@ if ($id_usuario) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -1,3 +1,4 @@
+DROP DATABASE MyNetflix;
 CREATE DATABASE MyNetflix;
 USE MyNetflix;
 
