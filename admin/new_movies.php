@@ -85,6 +85,12 @@ $resultDirectores = $pdo->query($sqlDirectores);
                                 <label for="imagen_cartelera" class="form-label">Imagen de Cartelera</label>
                                 <input type="file" class="form-control" id="imagen_cartelera" name="imagen_cartelera" accept="image/*">
                             </div>
+                            <?php if (isset($_SESSION['error'])): ?>
+                                <div class="error">
+                                    <?php echo $_SESSION['error']; ?>
+                                </div>
+                                <?php unset($_SESSION['error']); ?>
+                            <?php endif; ?>
                             <button type="submit" class="btn btn-primary w-100">Añadir Película</button>
                         </form>
                     </div>

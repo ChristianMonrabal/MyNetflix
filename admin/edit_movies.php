@@ -100,6 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                                 <input type="file" class="form-control" id="imagen_cartelera" name="imagen_cartelera" accept="image/*">
                                 <input type="text" class="form-control mt-2" value="<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" readonly>
                             </div>
+                            <?php
+                                if (isset($_SESSION['error'])): ?>
+                                    <div class="error">
+                                        <?php echo htmlspecialchars($_SESSION['error']); ?>
+                                    </div>
+                                    <?php unset($_SESSION['error']);
+                                endif;
+                            ?>
                             <button type="submit" class="btn btn-primary w-100">Guardar Cambios</button>
                         </form>
                     </div>
