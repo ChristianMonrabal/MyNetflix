@@ -1,58 +1,7 @@
 <?php
 session_start();
 require_once './includes/conexion.php';
-
-if (isset($_SESSION['email'])) {
-    $email = $_SESSION['email'];
-    $email = strstr($email, '@', true);
-} else {
-    $email = null;
-}
-
-$sqlTop5 = "
-    SELECT p.id_pelicula, p.titulo, p.imagen_cartelera, COUNT(l.id_like) AS total_likes
-    FROM peliculas p
-    LEFT JOIN likes l ON p.id_pelicula = l.id_pelicula
-    GROUP BY p.id_pelicula
-    ORDER BY total_likes DESC
-    LIMIT 5;
-";
-$resultTop5 = $pdo->query($sqlTop5);
-
-$sqlGeneros = "
-    SELECT p.id_pelicula, p.titulo, p.imagen_cartelera, g.nombre AS genero
-    FROM peliculas p
-    JOIN generos g ON p.id_genero = g.id_genero
-    ORDER BY g.nombre, p.titulo;
-";
-$resultGeneros = $pdo->query($sqlGeneros);
-
-$peliculasPorGenero = [];
-while ($row = $resultGeneros->fetch(PDO::FETCH_ASSOC)) {
-    $peliculasPorGenero[$row['genero']][] = $row;
-}
-
-$peliculasLikeUsuario = [];
-if (isset($_SESSION['email'])) {
-    $sqlUsuario = "SELECT id_usuario FROM usuarios WHERE email = :email";
-    $stmtUsuario = $pdo->prepare($sqlUsuario);
-    $stmtUsuario->execute(['email' => $_SESSION['email']]);
-    $usuario = $stmtUsuario->fetch(PDO::FETCH_ASSOC);
-    $id_usuario = $usuario['id_usuario'];
-
-    $sqlLikesUsuario = "
-        SELECT p.id_pelicula, p.titulo, p.imagen_cartelera
-        FROM peliculas p
-        JOIN likes l ON p.id_pelicula = l.id_pelicula
-        WHERE l.id_usuario = :id_usuario
-        ORDER BY p.titulo;
-    ";
-    $stmtLikesUsuario = $pdo->prepare($sqlLikesUsuario);
-    $stmtLikesUsuario->execute(['id_usuario' => $id_usuario]);
-    $peliculasLikeUsuario = $stmtLikesUsuario->fetchAll(PDO::FETCH_ASSOC);
-}
-
-$isTop5Empty = $resultTop5->rowCount() === 0;
+require_once './includes/select_index.php';
 ?>
 
 <!DOCTYPE html>
@@ -67,40 +16,39 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="index.php">NetHub</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <div class="navbar-nav mx-auto">
-                <a class="nav-link active" href="index.php">Inicio</a>
-                <a class="nav-link" href="">Series</a>
-                <a class="nav-link" href="">Películas</a>
-                <a class="nav-link" href="./public/news.php">Novedades</a>
-                <a class="nav-link" href="./public/mylist.php">Mi lista</a>
-                <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
-                    <a class="nav-link" href="./admin/actived_users.php">Panel de administración</a>
-                <?php endif; ?>
-            </div>
-            <div class="navbar-nav ms-auto">
-                <a href="./public/search.php" class="btn btn-outline-light">
-                    <i class="fas fa-search"></i>
-                </a>
-                <?php if ($email): ?>
-                    <span class="nav-link text-white ms-3"><?php echo htmlspecialchars($email); ?></span>
-                    <a href="php/logout.php" class="nav-link text-white">
-                        <i class="fas fa-sign-out-alt"></i>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.php">NetHub</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav mx-auto">
+                    <a class="nav-link active" href="index.php">Inicio</a>
+                    <a class="nav-link" href="">Series</a>
+                    <a class="nav-link" href="">Películas</a>
+                    <a class="nav-link" href="./public/news.php">Novedades</a>
+                    <a class="nav-link" href="./public/mylist.php">Mi lista</a>
+                    <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
+                        <a class="nav-link" href="./admin/actived_users.php">Panel de administración</a>
+                    <?php endif; ?>
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <a href="./public/search.php" class="btn btn-outline-light">
+                        <i class="fas fa-search"></i>
                     </a>
-                <?php else: ?>
-                    <a href="public/signin.php" class="nav-link text-white">Iniciar sesión</a>
-                <?php endif; ?>
+                    <?php if ($email): ?>
+                        <span class="nav-link text-white ms-3"><?php echo htmlspecialchars($email); ?></span>
+                        <a href="php/logout.php" class="nav-link text-white">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </a>
+                    <?php else: ?>
+                        <a href="public/signin.php" class="nav-link text-white">Iniciar sesión</a>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
 
     <div class="container mt-5">
         <h2 class="mt-5 text-center">Las 5 películas más populares en España</h2>
@@ -121,22 +69,51 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                                 <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
                             </a>
                         </div>
-                    <?php endforeach; ?>
-                </div>
-            <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
 
         <?php foreach ($peliculasPorGenero as $genero => $peliculas): ?>
             <h3 class="mt-4"><?php echo htmlspecialchars($genero); ?></h3>
-            <div class="row">
-                <?php foreach ($peliculas as $pelicula): ?>
-                    <div class="col-md-2 mb-3">
-                        <a href="./public/show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
-                            <img src="./img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded-start" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
-                        </a>
+            
+            <?php if (count($peliculas) > 6): ?>
+                    <div id="carousel-<?php echo md5($genero); ?>" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <?php foreach (array_chunk($peliculas, 6) as $index => $grupoPeliculas): ?>
+                                <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                    <div class="row">
+                                        <?php foreach ($grupoPeliculas as $pelicula): ?>
+                                            <div class="col-md-2 mb-3">
+                                                <a href="./public/show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
+                                                    <img src="./img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
+                                                </a>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?php echo md5($genero); ?>" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?php echo md5($genero); ?>" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
                     </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="row">
+                        <?php foreach ($peliculas as $pelicula): ?>
+                            <div class="col-md-2 mb-3">
+                                <a href="./public/show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
+                                    <img src="./img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
+                                </a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

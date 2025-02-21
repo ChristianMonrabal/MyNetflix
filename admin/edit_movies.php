@@ -1,23 +1,7 @@
 <?php
 session_start();
 require_once '../includes/conexion.php';
-
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$email = strstr($email, '@', true);
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
-    $id_pelicula = $_GET['id'];
-
-    $sql = "SELECT * FROM peliculas WHERE id_pelicula = :id_pelicula";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':id_pelicula', $id_pelicula);
-    $stmt->execute();
-    $pelicula = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$pelicula) {
-        die("Película no encontrada.");
-    }
-}
+require_once '../includes/include_edit_movies.php';
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripción</label>
                                 <textarea class="form-control" id="descripcion" name="descripcion"><?php echo htmlspecialchars($pelicula['description_pelicula']); ?></textarea>
-                                </div>
+                            </div>
                             <div class="mb-3">
                                 <label for="id_genero" class="form-label">Género</label>
                                 <select class="form-select" id="id_genero" name="id_genero">

@@ -2,14 +2,6 @@
 session_start();
 require_once '../includes/conexion.php';
 require_once '../includes/select_disabled_users.php';
-
-if (!isset($_SESSION['ADMIN']) || $_SESSION['ADMIN'] !== true) {
-    header('Location: ../index.php');
-    exit();
-}
-
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$email = strstr($email, '@', true);
 ?>
 
 <!DOCTYPE html>

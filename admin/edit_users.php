@@ -1,23 +1,7 @@
 <?php
 session_start();
 require_once '../includes/conexion.php';
-
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$email = strstr($email, '@', true);
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
-    $id_usuario = $_GET['id'];
-
-    $sql = "SELECT * FROM usuarios WHERE id_usuario = :id_usuario";
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':id_usuario', $id_usuario);
-    $stmt->execute();
-    $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if (!$usuario) {
-        die("Usuario no encontrado.");
-    }
-}
+require_once '../includes/include_edit_users.php';
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
                             </div>
                             <div class="mb-3">
                                 <label for="pwd" class="form-label">Contraseña</label>
-                                <input type="password" class="form-control" id="pwd" name="pwd" value="<?php echo htmlspecialchars($usuario['pwd']); ?>">
+                                <input type="password" class="form-control" id="pwd" name="pwd">
                             </div>
                             <div class="mb-3">
                                 <label for="rol" class="form-label">Rol</label>
