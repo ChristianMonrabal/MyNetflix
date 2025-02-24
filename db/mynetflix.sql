@@ -64,7 +64,7 @@ INSERT INTO generos (nombre) VALUES
 ('Acción'), ('Comedia'), ('Drama'), ('Ciencia Ficción'), ('Terror'), 
 ('Aventura'), ('Fantástico'), ('Thriller'), ('Romance'), ('Animación');
 
-INSERT INTO directores (nombre) VALUES 
+INSERT INTO directores (nombre) VALUES
 ('Christopher Nolan'), ('Quentin Tarantino'), ('Steven Spielberg'),
 ('James Cameron'), ('Martin Scorsese'), ('Ridley Scott'),
 ('Francis Ford Coppola'), ('Guillermo del Toro'), ('Tim Burton'),
@@ -94,6 +94,14 @@ INSERT INTO peliculas (titulo, id_genero, id_director, fecha_estreno, duracion, 
 ('The Godfather', 8, 7, '1972-03-24', 175, 'godfather_poster.jpg', 'La historia de la familia mafiosa Corleone mientras tratan de mantener su poder y legado.'),
 ('Pan’s Labyrinth', 7, 8, '2006-10-11', 118, 'pans_labyrinth_poster.jpg', 'Una niña se sumerge en un mundo de criaturas fantásticas en la España de la posguerra.'),
 ('The Lord of the Rings: The Fellowship of the Ring', 7, 10, '2001-12-19', 178, 'lotr_fellowship_poster.jpg', 'Un hobbit debe destruir un anillo mágico antes de que caiga en manos del malvado Sauron.');
+
+INSERT INTO peliculas (titulo, id_genero, id_director, fecha_estreno, duracion, imagen_cartelera, description_pelicula) VALUES
+('RHLM 2', 7, 11, '2024-04-03', 666, 'RHLM_2.jpg', '2025'),
+('LLNM1', 7, 11, '2021-11-26', 67, 'LLNM1.png', 'Las Leyendas Nunca Mueren 1'),
+('LLNM2', 7, 11, '2022-12-09', 125, 'LLNM2.jpg', 'Las Leyendas Nunca Mueren 2'),
+('RHLM', 7, 11, '2018-07-17', 43, 'RHLM.png', 'Real Hasta La Muerte'),
+('Los Dioses', 7, 11, '2021-01-22', 41, 'Los_Dioses.jpg', 'Los Dioses Anuel Ft Ozuna'),
+('Emmanuel', 7, 11, '2020-05-29', 128, 'Emmanuel.jpg', 'Emmanuel');
 
 INSERT INTO reparto (id_pelicula, id_actor, personaje) VALUES
 (1, 1, 'Dom Cobb'),

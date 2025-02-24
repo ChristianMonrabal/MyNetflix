@@ -49,3 +49,7 @@
 nav {
     background-color: #141414;
 }
+
+.error {
+    color: red;
+}

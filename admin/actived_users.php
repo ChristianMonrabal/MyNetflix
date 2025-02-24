@@ -2,14 +2,6 @@
 session_start();
 require_once '../includes/conexion.php';
 require_once '../includes/select_actived_users.php';
-
-if (!isset($_SESSION['ADMIN']) || $_SESSION['ADMIN'] !== true) {
-    header('Location: ../index.php');
-    exit();
-}
-
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$email = strstr($email, '@', true);
 ?>
 
 <!DOCTYPE html>
@@ -78,5 +70,6 @@ $email = strstr($email, '@', true);
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/filter_user_active.js"></script>
+<script src="../js/sweet_alerts.js"></script>
 </body>
 </html>

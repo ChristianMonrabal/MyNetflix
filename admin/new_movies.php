@@ -1,15 +1,7 @@
 <?php
 session_start();
 require_once '../includes/conexion.php';
-
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$email = strstr($email, '@', true);
-
-$sqlGeneros = "SELECT id_genero, nombre FROM generos";
-$resultGeneros = $pdo->query($sqlGeneros);
-
-$sqlDirectores = "SELECT id_director, nombre FROM directores";
-$resultDirectores = $pdo->query($sqlDirectores);
+require_once '../includes/include_new_movies.php';
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +77,12 @@ $resultDirectores = $pdo->query($sqlDirectores);
                                 <label for="imagen_cartelera" class="form-label">Imagen de Cartelera</label>
                                 <input type="file" class="form-control" id="imagen_cartelera" name="imagen_cartelera" accept="image/*">
                             </div>
+                            <?php if (isset($_SESSION['error'])): ?>
+                                <div class="error">
+                                    <?php echo $_SESSION['error']; ?>
+                                </div>
+                                <?php unset($_SESSION['error']); ?>
+                            <?php endif; ?>
                             <button type="submit" class="btn btn-primary w-100">Añadir Película</button>
                         </form>
                     </div>
