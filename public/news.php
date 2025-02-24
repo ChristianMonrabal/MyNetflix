@@ -65,7 +65,7 @@ require_once '../includes/include_news.php';
             <h3 class="mt-4">Novedades</h3>
             <div class="row">
                 <?php foreach ($peliculas as $pelicula): ?>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-2 mb-3 div-img">
                         <a href="./show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
                             <img src="../img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded-start" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
                         </a>

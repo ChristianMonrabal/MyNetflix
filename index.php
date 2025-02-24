@@ -19,11 +19,21 @@ require_once './includes/select_index.php';
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.php">NetHub</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="container d-flex">
+            <!-- Botón de hamburguesa a la izquierda -->
+            <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Logo NetHub y botón de búsqueda -->
+            <div class="d-flex align-items-center ms-auto">
+                <a class="navbar-brand" href="index.php">NetHub</a>
+                <a href="./public/search.php" class="btn btn-outline-light ms-3">
+                    <i class="fas fa-search"></i>
+                </a>
+            </div>
+
+            <!-- Contenedor del menú -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
                     <a class="nav-link active" href="index.php">Inicio</a>
@@ -36,9 +46,6 @@ require_once './includes/select_index.php';
                     <?php endif; ?>
                 </div>
                 <div class="navbar-nav ms-auto">
-                    <a href="./public/search.php" class="btn btn-outline-light">
-                        <i class="fas fa-search"></i>
-                    </a>
                     <?php if ($email): ?>
                         <div class="dropdown mx-4">
                             <button class="usuario-logueado dropdown-toggle mx-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -59,6 +66,8 @@ require_once './includes/select_index.php';
             </div>
         </div>
     </nav>
+
+
 
 
     <div class="container mt-5">
