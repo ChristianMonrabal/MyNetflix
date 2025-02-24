@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>
                     <a href="../admin/edit_users.php?id=${user.id_usuario}" class="btn btn-success btn-sm">Editar</a>
                     <a href="../php/disable_users.php?id=${user.id_usuario}" class="btn btn-warning btn-sm">Desactivar</a>
-                    <a href="../php/delete_users.php?id=${user.id_usuario}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
+                    <a href="#" class="btn btn-danger btn-sm" onclick="confirmDeleteUser(${user.id_usuario})">Eliminar</a>
                 </td>
             `;
             userTable.appendChild(row);
