@@ -91,7 +91,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                     </a>
                     <?php if ($email): ?>
                         <div class="dropdown mx-4">
-                            <button class="usuario-logueado dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="usuario-logueado dropdown-toggle mx-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-user me-2"></i>
                                 <?= htmlspecialchars($email) ?>
                             </button>
@@ -125,7 +125,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
                 endwhile;
 
                 foreach ($peliculas as $row): ?>
-                    <div class="col-md-2 mb-4 text-center">
+                    <div class="col-md-2 mb-4 text-center div-img">
                         <a href="./public/show_movie.php?id=<?php echo $row['id_pelicula']; ?>" class="carteleras">
                             <img src="./img/carteleras/<?php echo htmlspecialchars($row['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($row['titulo']); ?>">
                         </a>
@@ -138,7 +138,7 @@ $isTop5Empty = $resultTop5->rowCount() === 0;
             <h3 class="mt-4"><?php echo htmlspecialchars($genero); ?></h3>
             <div class="row">
                 <?php foreach ($peliculas as $pelicula): ?>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-2 mb-3 div-img">
                         <a href="./public/show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
                             <img src="./img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded-start" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
                         </a>

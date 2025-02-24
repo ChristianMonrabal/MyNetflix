@@ -183,3 +183,16 @@ nav {
     border-color: #b20710;
     transform: scale(1.05);
 }
+
+/* RESPONSIVE */
+
+@media (max-width: 800px) {
+    .carteleras img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .div-img {
+        width: 48%;
+    }
+}
