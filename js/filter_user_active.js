@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('emailSearch');
-    const clearButton = document.getElementById('clearSearch');
-    const userTable = document.getElementById('userTable');
+    searchInput = document.getElementById('emailSearch');
+    clearButton = document.getElementById('clearSearch');
+    userTable = document.getElementById('userTable');
     let filterActive = false;
 
     searchInput.addEventListener('input', function() {
-        const searchTerm = searchInput.value.trim();
+        searchTerm = searchInput.value.trim();
         clearButton.style.display = searchTerm ? 'block' : 'none';
         filterActive = searchTerm.length > 0;
 
@@ -30,11 +30,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function ajaxRequest(url) {
-        const xhr = new XMLHttpRequest();
+        xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                const data = JSON.parse(xhr.responseText);
+                data = JSON.parse(xhr.responseText);
                 updateUserTable(data);
             }
         };
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         users.forEach(user => {
-            const row = document.createElement('tr');
+            row = document.createElement('tr');
             row.innerHTML = `
                 <td>${user.email}</td>
                 <td>${user.fecha_registro}</td>
