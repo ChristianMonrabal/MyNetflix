@@ -11,6 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $description_pelicula = $_POST['descripcion'];
     $imagen_cartelera = $_FILES['imagen_cartelera'];
 
+    $fecha_actual = date('Y-m-d');
+    if ($fecha_estreno > $fecha_actual) {
+        $_SESSION['error'] = "La fecha de estreno no puede ser posterior a la fecha actual.";
+        header("Location: ../admin/new_movies.php");
+        exit;
+    }
+
     $target_dir = "../img/carteleras/";
     $imageFileType = strtolower(pathinfo($imagen_cartelera["name"], PATHINFO_EXTENSION));
 
@@ -19,24 +26,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $check = getimagesize($imagen_cartelera["tmp_name"]);
     if ($check === false) {
-        die("El archivo no es una imagen.");
+        $_SESSION['error'] = "El archivo no es una imagen.";
+        header("Location: ../admin/new_movies.php");
+        exit;
     }
 
     if (file_exists($target_file)) {
-        die("Lo siento, el archivo ya existe.");
+        $_SESSION['error'] = "Lo siento, el archivo ya existe.";
+        header("Location: ../admin/new_movies.php");
+        exit;
     }
 
     if ($imagen_cartelera["size"] > 5000000) {
-        die("Lo siento, el archivo es demasiado grande.");
+        $_SESSION['error'] = "Lo siento, el archivo es demasiado grande.";
+        header("Location: ../admin/new_movies.php");
+        exit;
     }
 
     $allowed_formats = array("jpg", "jpeg", "png", "gif");
     if (!in_array($imageFileType, $allowed_formats)) {
-        die("Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.");
+        $_SESSION['error'] = "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+        header("Location: ../admin/new_movies.php");
+        exit;
     }
 
     if (!move_uploaded_file($imagen_cartelera["tmp_name"], $target_file)) {
-        die("Lo siento, hubo un error al subir tu archivo.");
+        $_SESSION['error'] = "Lo siento, hubo un error al subir tu archivo.";
+        header("Location: ../admin/new_movies.php");
+        exit;
     }
 
     $sql = "INSERT INTO peliculas (titulo, id_genero, id_director, fecha_estreno, duracion, imagen_cartelera, description_pelicula) 
@@ -54,7 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: ../admin/show_movies.php");
         exit;
     } else {
-        echo "Error al añadir la película.";
+        $_SESSION['error'] = "Error al añadir la película.";
+        header("Location: ../admin/new_movies.php");
+        exit;
     }
 }
 ?>

@@ -1,24 +1,7 @@
 <?php
 session_start();
 require_once '../includes/conexion.php';
-
-if (!isset($_SESSION['ADMIN']) || $_SESSION['ADMIN'] !== true) {
-    header('Location: ../index.php');
-    exit();
-}
-
-$email = isset($_SESSION['email']) ? $_SESSION['email'] : '';
-$email = strstr($email, '@', true);
-
-$sqlPeliculas = "
-    SELECT p.id_pelicula, p.titulo, p.fecha_estreno, p.duracion, p.imagen_cartelera, p.description_pelicula, 
-        g.nombre AS genero, d.nombre AS director
-        FROM peliculas p
-        JOIN generos g ON p.id_genero = g.id_genero
-        JOIN directores d ON p.id_director = d.id_director
-";
-
-$resultPeliculas = $pdo->query($sqlPeliculas);
+require_once '../includes/include_show_movies.php';
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +79,7 @@ $resultPeliculas = $pdo->query($sqlPeliculas);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../js/filter_movies.js"></script>
+    <script src="../js/filter_movies_crud.js"></script>
     <script src="../js/sweet_alerts.js"></script>
 </body>
 </html>

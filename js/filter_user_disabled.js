@@ -2,14 +2,17 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('emailSearch');
     const clearButton = document.getElementById('clearSearch');
     const userTable = document.getElementById('userTable');
+    let filterActive = false;
 
     searchInput.addEventListener('input', function() {
         const searchTerm = searchInput.value.trim();
         clearButton.style.display = searchTerm ? 'block' : 'none';
+        filterActive = searchTerm.length > 0;
 
         if (searchTerm) {
             ajaxRequest(`../php/search_users_disabled.php?email=${searchTerm}`);
         } else {
+            filterActive = false;
             loadAllUsers();
         }
     });
@@ -17,11 +20,14 @@ document.addEventListener('DOMContentLoaded', function() {
     clearButton.addEventListener('click', function() {
         searchInput.value = '';
         clearButton.style.display = 'none';
+        filterActive = false;
         loadAllUsers();
     });
 
     function loadAllUsers() {
-        ajaxRequest('../php/search_users_disabled.php');
+        if (!filterActive) {
+            ajaxRequest('../php/search_users_disabled.php');
+        }
     }
 
     function ajaxRequest(url) {
@@ -51,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <td>${user.fecha_registro}</td>
                 <td>
                     <a href="../admin/edit_users.php?id=${user.id_usuario}" class="btn btn-success btn-sm">Editar</a>
-                    <a href="../php/active_users.php?id=${user.id_usuario}" class="btn btn-success btn-sm">Activar</a>
+                    <a href="../php/active_users.php?id=${user.id_usuario}" class="btn btn-warning btn-sm">Activar</a>
                     <a href="../php/delete_users.php?id=${user.id_usuario}" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este usuario?');">Eliminar</a>
                 </td>
             `;
@@ -70,6 +76,11 @@ document.addEventListener('DOMContentLoaded', function() {
         xhr.send();
     }
 
-    setInterval(loadAllUsers, 2000);
+    setInterval(() => {
+        if (!filterActive) {
+            loadAllUsers();
+        }
+    }, 2000);
+
     loadAllUsers();
 });

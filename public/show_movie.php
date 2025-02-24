@@ -1,54 +1,7 @@
 <?php
 session_start();
 require_once '../includes/conexion.php';
-
-if (!isset($_SESSION['LOGGEDIN']) || $_SESSION['LOGGEDIN'] !== true) {
-    header("Location: signin.php");
-    exit();
-}
-
-if (isset($_SESSION['email'])) {
-    $email = $_SESSION['email'];
-    $email = strstr($email, '@', true);
-
-    $sql_usuario = "SELECT id_usuario FROM usuarios WHERE email = :email";
-    $stmt_usuario = $pdo->prepare($sql_usuario);
-    $stmt_usuario->execute(['email' => $_SESSION['email']]);
-    $usuario = $stmt_usuario->fetch(PDO::FETCH_ASSOC);
-    $id_usuario = $usuario['id_usuario'];
-} else {
-    $id_usuario = null;
-}
-
-if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header("Location: ../index.php");
-    exit;
-}
-
-$id_pelicula = $_GET['id'];
-
-$sql_check_like = "SELECT COUNT(*) FROM likes WHERE id_usuario = :id_usuario AND id_pelicula = :id_pelicula";
-$stmt_check_like = $pdo->prepare($sql_check_like);
-$stmt_check_like->execute(['id_usuario' => $id_usuario, 'id_pelicula' => $id_pelicula]);
-$like_exists = $stmt_check_like->fetchColumn();
-
-$sql = "
-    SELECT p.titulo, p.fecha_estreno, p.duracion, p.imagen_cartelera, p.description_pelicula, 
-        g.nombre AS genero, d.nombre AS director
-    FROM peliculas p
-    JOIN generos g ON p.id_genero = g.id_genero
-    JOIN directores d ON p.id_director = d.id_director
-    WHERE p.id_pelicula = :id_pelicula
-";
-
-$stmt = $pdo->prepare($sql);
-$stmt->execute(['id_pelicula' => $id_pelicula]);
-$pelicula = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if (!$pelicula) {
-    header("Location: ../index.php");
-    exit;
-}
+require_once '../includes/include_show_movie.php';
 ?>
 
 <!DOCTYPE html>
@@ -72,12 +25,15 @@ if (!$pelicula) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
                     <a class="nav-link" href="../index.php">Inicio</a>
-                    <a class="nav-link" href="../series.php">Series</a>
-                    <a class="nav-link" href="../peliculas.php">Películas</a>
-                    <a class="nav-link" href="../novedades.php">Novedades</a>
-                    <a class="nav-link" href="../mi_lista.php">Mi lista</a>
+                    <a class="nav-link" href="">Series</a>
+                    <a class="nav-link" href="">Películas</a>
+                    <a class="nav-link" href="./news.php">Novedades</a>
+                    <a class="nav-link" href="./mylist.php">Mi lista</a>
                 </div>
                 <div class="navbar-nav ms-auto">
+                    <a href="search.php" class="btn btn-outline-light">
+                        <i class="fas fa-search"></i>
+                    </a>
                     <?php if ($email): ?>
                         <span class="nav-link text-white"><?php echo htmlspecialchars($email); ?></span>
                         <a href="../php/logout.php" class="nav-link text-white">
@@ -92,7 +48,7 @@ if (!$pelicula) {
     </nav>
 
     <div class="container mt-5">
-        <a href="../index.php" class="btn btn-outline-light">
+        <a href="javascript:history.back()" class="btn btn-outline-light">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div class="row">
@@ -109,13 +65,16 @@ if (!$pelicula) {
                 <p><strong>Director:</strong> <?php echo htmlspecialchars($pelicula['director']); ?></p>
                 <p><strong>Fecha de estreno:</strong> <?php echo htmlspecialchars($pelicula['fecha_estreno']); ?></p>
                 <p><strong>Duración:</strong> <?php echo htmlspecialchars($pelicula['duracion']); ?> min</p>
-                
+
                 <a href="https://www.youtube.com/results?search_query=<?php echo urlencode($pelicula['titulo'] . ' trailer'); ?>" 
                     target="_blank" 
                     class="btn btn-danger">
                     <i class="fab fa-youtube"></i> Ver tráiler
                 </a>
                 <br><br>
+
+                <p><strong>Likes:</strong> <?php echo $total_likes; ?></p>
+
                 <?php if ($id_usuario): ?>
                     <form action="../php/likes.php" method="POST">
                         <input type="hidden" name="id_pelicula" value="<?php echo $id_pelicula; ?>">

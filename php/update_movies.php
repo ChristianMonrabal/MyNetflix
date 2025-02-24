@@ -39,24 +39,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
 
             $check = getimagesize($imagen_cartelera["tmp_name"]);
             if ($check === false) {
-                die("El archivo no es una imagen.");
+                $_SESSION['error'] = "El archivo no es una imagen.";
+                header("Location: ../admin/edit_movies.php?id=" . $id_pelicula);
+                exit;
             }
 
             if (file_exists($target_file)) {
                 unlink($target_file);
             }
 
-            if ($imagen_cartelera["size"] > 50000000000) {
-                die("Lo siento, el archivo es demasiado grande.");
+            if ($imagen_cartelera["size"] > 5000000) {
+                $_SESSION['error'] = "Lo siento, el archivo es demasiado grande.";
+                header("Location: ../admin/edit_movies.php?id=" . $id_pelicula);
+                exit;
             }
 
             $allowed_formats = array("jpg", "jpeg", "png", "gif");
             if (!in_array($imageFileType, $allowed_formats)) {
-                die("Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.");
+                $_SESSION['error'] = "Lo siento, solo se permiten archivos JPG, JPEG, PNG y GIF.";
+                header("Location: ../admin/edit_movies.php?id=" . $id_pelicula);
+                exit;
             }
 
             if (!move_uploaded_file($imagen_cartelera["tmp_name"], $target_file)) {
-                die("Lo siento, hubo un error al subir tu archivo.");
+                $_SESSION['error'] = "Lo siento, hubo un error al subir tu archivo.";
+                header("Location: ../admin/edit_movies.php?id=" . $id_pelicula);
+                exit;
             }
 
             $sql = "UPDATE peliculas SET imagen_cartelera = :imagen_cartelera WHERE id_pelicula = :id_pelicula";
@@ -69,7 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
         header("Location: ../admin/show_movies.php");
         exit;
     } else {
-        echo "Error al actualizar la película.";
+        $_SESSION['error'] = "Error al actualizar la película.";
+        header("Location: ../admin/edit_movies.php?id=" . $id_pelicula);
+        exit;
     }
 }
+
 ?>
