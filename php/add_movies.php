@@ -11,6 +11,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $description_pelicula = $_POST['descripcion'];
     $imagen_cartelera = $_FILES['imagen_cartelera'];
 
+    if (empty($titulo) || empty($id_genero) || empty($id_director) || empty($fecha_estreno) || empty($duracion) || empty($description_pelicula)) {
+        $_SESSION['error'] = "Todos los campos son obligatorios.";
+        header("Location: ../admin/new_movies.php");
+        exit;
+    }
+
     $fecha_actual = date('Y-m-d');
     if ($fecha_estreno > $fecha_actual) {
         $_SESSION['error'] = "La fecha de estreno no puede ser posterior a la fecha actual.";

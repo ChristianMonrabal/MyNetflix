@@ -12,6 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
     $duracion = $_POST['duracion'];
     $imagen_cartelera = $_FILES['imagen_cartelera'];
 
+    if (empty($titulo) || empty($descripcion) || empty($id_genero) || empty($id_director) || empty($fecha_estreno) || empty($duracion)) {
+        $_SESSION['error'] = "Todos los campos son obligatorios.";
+        header("Location: ../admin/edit_movies.php?id=" . $id_pelicula);
+        exit;
+    }
+
     $sql = "UPDATE peliculas 
             SET titulo = :titulo, description_pelicula = :descripcion, id_genero = :id_genero, 
                 id_director = :id_director, fecha_estreno = :fecha_estreno, duracion = :duracion 
@@ -82,5 +88,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id_pelicula'])) {
         exit;
     }
 }
-
 ?>

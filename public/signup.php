@@ -22,20 +22,20 @@
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" placeholder="Introduce tu contraseña">
                 </div>
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="error">
+                        <?php echo htmlspecialchars($_SESSION['error']); ?>
+                    </div>
+                    <?php unset($_SESSION['error']); ?>
+                <?php elseif (isset($_SESSION['success'])): ?>
+                    <div class="success">
+                        <?php echo htmlspecialchars($_SESSION['success']); ?>
+                    </div>
+                    <?php unset($_SESSION['success']); ?>
+                <?php endif; ?>
                 <button type="submit" class="btn-submit">Registrar</button>
             </form>
             <br>
-            <?php if (isset($_SESSION['error'])): ?>
-                <div class="error">
-                    <?php echo htmlspecialchars($_SESSION['error']); ?>
-                </div>
-                <?php unset($_SESSION['error']); ?>
-            <?php elseif (isset($_SESSION['success'])): ?>
-                <div class="success">
-                    <?php echo htmlspecialchars($_SESSION['success']); ?>
-                </div>
-                <?php unset($_SESSION['success']); ?>
-            <?php endif; ?>
             <p class="signup-link">Si ya tienes cuenta, inicia sesión <a id="here" href="./signin.php">aquí</a></p>
         </div>
     </div>

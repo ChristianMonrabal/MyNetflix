@@ -47,7 +47,7 @@ if ($hayFiltros) {
     if ($result) {
         echo '<div class="row">';
         foreach ($result as $row) {
-            echo '<div class="col-12 col-md-4 mb-4">';
+            echo '<div class="col-md-2 mb-3 div-img">';
             echo '<div class="card">';
             echo '<a href="show_movie.php?id=' . $row['id_pelicula'] . '">';
             echo '<img src="../img/carteleras/' . htmlspecialchars($row['imagen_cartelera']) . '" class="card-img-top" alt="Cartelera de ' . htmlspecialchars($row['titulo']) . '">';

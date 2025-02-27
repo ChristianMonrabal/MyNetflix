@@ -37,8 +37,6 @@ require_once './includes/select_index.php';
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
                     <a class="nav-link active" href="index.php">Inicio</a>
-                    <a class="nav-link" href="">Series</a>
-                    <a class="nav-link" href="">Películas</a>
                     <a class="nav-link" href="./public/news.php">Novedades</a>
                     <a class="nav-link" href="./public/mylist.php">Mi lista</a>
                     <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>

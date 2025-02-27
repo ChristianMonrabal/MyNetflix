@@ -26,9 +26,9 @@ unset($_SESSION['error'], $_SESSION['email']);
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" placeholder="Introduce tu contraseña">
                 </div>
-                                <?php if (!empty($error)): ?>
-                    <p class="error"><?php echo htmlspecialchars($error); ?></p>
-                <?php endif; ?>
+                    <?php if (!empty($error)): ?>
+                        <p class="error"><?php echo htmlspecialchars($error); ?></p>
+                    <?php endif; ?>
                 <button type="submit" class="btn-submit">Iniciar sesión</button>
             </form>
             <p class="signup-link">Si no tienes cuenta, créala <a id="here" href="./signup.php">aquí</a></p>

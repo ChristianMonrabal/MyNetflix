@@ -1,12 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
     function fetchResults() {
-        xhr = new XMLHttpRequest();
-        xhr.open("GET", "../php/search_movies.php?" + new URLSearchParams(new FormData(document.getElementById("search-form"))), true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                document.getElementById("results").innerHTML = xhr.responseText;
+        let xhr = new XMLHttpRequest();
+        let formData = new FormData(document.getElementById("search-form"));
+        let params = new URLSearchParams(formData);
 
-                clearFiltersBtn = document.getElementById("clear-filters");
+        xhr.open("GET", "../php/search_movies.php?" + params, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                document.getElementById("movie-container").innerHTML = xhr.responseText;
+
+                let clearFiltersBtn = document.getElementById("clear-filters");
                 if (clearFiltersBtn) {
                     clearFiltersBtn.addEventListener("click", function () {
                         document.getElementById("search-form").reset();
@@ -18,8 +21,13 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send();
     }
 
-    document.getElementById("search-form").addEventListener("input", fetchResults);
-    document.getElementById("search-form").addEventListener("change", fetchResults);
+    window.addEventListener("load", fetchResults);
+
+    let searchForm = document.getElementById("search-form");
+    if (searchForm) {
+        searchForm.addEventListener("input", fetchResults);
+        searchForm.addEventListener("change", fetchResults);
+    }
 
     fetchResults();
 });
