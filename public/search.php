@@ -44,7 +44,7 @@ if (isset($_SESSION['email'])) {
             <div class="navbar-nav ms-auto">
                 <?php if ($email): ?>
                     <span class="nav-link text-white ms-3"><?php echo htmlspecialchars($email); ?></span>
-                    <a href="php/logout.php" class="nav-link text-white">
+                    <a href="../php/logout.php" class="nav-link text-white">
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 <?php else: ?>
