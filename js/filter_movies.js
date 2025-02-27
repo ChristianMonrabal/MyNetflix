@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     function fetchResults() {
+        formData = new FormData(document.getElementById("search-form"));
+        params = new URLSearchParams(formData);
+        
         xhr = new XMLHttpRequest();
-        xhr.open("GET", "../php/search_movies.php?" + new URLSearchParams(new FormData(document.getElementById("search-form"))), true);
+        xhr.open("GET", "../php/search_movies.php?" + params.toString(), true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 document.getElementById("results").innerHTML = xhr.responseText;
@@ -18,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send();
     }
 
+    window.addEventListener("load", fetchResults);
+
     document.getElementById("search-form").addEventListener("input", fetchResults);
     document.getElementById("search-form").addEventListener("change", fetchResults);
-
-    fetchResults();
 });
