@@ -91,27 +91,23 @@ require_once '../includes/include_show_movie.php';
                 </a>
                 <br><br>
 
-                <p><strong>Likes:</strong> <?php echo $total_likes; ?></p>
+                <p><strong>Likes:</strong> <span id="likeCounter"><?php echo $total_likes; ?></span></p>
 
                 <?php if ($id_usuario): ?>
-                    <form action="../php/likes.php" method="POST">
-                        <input type="hidden" name="id_pelicula" value="<?php echo $id_pelicula; ?>">
-                        <?php if ($like_exists): ?>
-                            <button type="submit" name="action" value="remove" class="btn btn-outline-light">
-                                <i class="fas fa-thumbs-down"></i> No me gusta
-                            </button>
-                        <?php else: ?>
-                            <button type="submit" name="action" value="add" class="btn btn-outline-light">
-                                <i class="fas fa-thumbs-up"></i> Me gusta
-                            </button>
-                        <?php endif; ?>
-                    </form>
+                    <button id="likeButton" 
+                            data-id="<?php echo $id_pelicula; ?>" 
+                            data-action="<?php echo $like_exists ? 'remove' : 'add'; ?>"
+                            class="btn btn-outline-light">
+                        <i class="fas fa-thumbs-<?php echo $like_exists ? 'down' : 'up'; ?>"></i> 
+                        <?php echo $like_exists ? 'No me gusta' : 'Me gusta'; ?>
+                    </button>
                 <?php endif; ?>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/likes.js"></script>
 </body>
 
 </html>

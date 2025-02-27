@@ -61,7 +61,7 @@ INSERT INTO usuarios (email, pwd, rol) VALUES
 ('david@gmail.com', '$2y$10$zVaDbSdLEgjGPfpE9AlprON.6THmFJESu9So2S5t.ch4qPurk2X/O', 'disabled');
 
 INSERT INTO generos (nombre) VALUES 
-('Acción'), ('Comedia'), ('Drama'), ('Ciencia Ficción'), ('Terror'), 
+('Trap'), ('Acción'), ('Comedia'), ('Drama'), ('Ciencia Ficción'), ('Terror'), 
 ('Aventura'), ('Fantástico'), ('Thriller'), ('Romance'), ('Animación');
 
 INSERT INTO directores (nombre) VALUES

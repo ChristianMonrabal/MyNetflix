@@ -3,7 +3,7 @@ session_start();
 require_once '../includes/conexion.php';
 
 if (!isset($_SESSION['USER_ID'])) {
-    header("Location: ../public/signin.php");
+    echo json_encode(['error' => 'No estás autenticado']);
     exit;
 }
 
@@ -21,8 +21,14 @@ if ($id_pelicula && $action) {
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['id_usuario' => $id_usuario, 'id_pelicula' => $id_pelicula]);
     }
-}
 
-header("Location: ../public/show_movie.php?id=" . $id_pelicula);
+    $sql = "SELECT COUNT(*) FROM likes WHERE id_pelicula = :id_pelicula";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id_pelicula' => $id_pelicula]);
+    $total_likes = $stmt->fetchColumn();
+
+    echo json_encode(['success' => true, 'total_likes' => $total_likes]);
+} else {
+    echo json_encode(['error' => 'Datos incompletos']);
+}
 exit;
-?>

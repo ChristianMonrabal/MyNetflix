@@ -21,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send();
     }
 
+    window.addEventListener("load", fetchResults);
+
     let searchForm = document.getElementById("search-form");
     if (searchForm) {
         searchForm.addEventListener("input", fetchResults);
