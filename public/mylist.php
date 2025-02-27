@@ -35,9 +35,9 @@ require_once '../includes/include_mylist.php';
             <!-- Contenedor del menú -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
-                    <a class="nav-link active" href="../index.php">Inicio</a>
+                    <a class="nav-link" href="../index.php">Inicio</a>
                     <a class="nav-link" href="../public/news.php">Novedades</a>
-                    <a class="nav-link" href="../public/mylist.php">Mi lista</a>
+                    <a class="nav-link active" href="../public/mylist.php">Mi lista</a>
                     <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
                         <a class="nav-link" href="../admin/actived_users.php">Panel de administración</a>
                     <?php endif; ?>
@@ -50,7 +50,7 @@ require_once '../includes/include_mylist.php';
                                 <?= htmlspecialchars($email) ?>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="php/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
+                                <li><a class="dropdown-item" href="../php/logout.php"><i class="fas fa-sign-out-alt me-2"></i>Cerrar Sesión</a></li>
                             </ul>
                         </div>
                     <?php else: ?>
