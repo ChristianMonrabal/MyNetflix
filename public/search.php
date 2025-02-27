@@ -57,11 +57,12 @@ if (isset($_SESSION['email'])) {
 
 <div class="container mt-4">
     <form id="search-form">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Buscar películas, series..." name="search" id="search">
-        </div>
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
+                <label for="movie_name" class="form-label">Nombre de la película</label>
+                <input type="text" class="form-control" name="search" id="search" placeholder="Nombre de la película">
+            </div>
+            <div class="col-md-3">
                 <label for="director" class="form-label">Director</label>
                 <select name="director" id="director" class="form-select">
                     <option value="">Seleccionar director</option>
@@ -73,7 +74,7 @@ if (isset($_SESSION['email'])) {
                     ?>
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="actor" class="form-label">Actor</label>
                 <select name="actor" id="actor" class="form-select">
                     <option value="">Seleccionar actor</option>
@@ -85,7 +86,7 @@ if (isset($_SESSION['email'])) {
                     ?>
                 </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <label for="genero" class="form-label">Género</label>
                 <select name="genero" id="genero" class="form-select">
                     <option value="">Seleccionar género</option>
