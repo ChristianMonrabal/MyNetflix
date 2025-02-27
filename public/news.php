@@ -19,29 +19,34 @@ require_once '../includes/include_news.php';
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="../index.php">NetHub</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <div class="container d-flex">
+            <!-- Botón de hamburguesa a la izquierda -->
+            <button class="navbar-toggler me-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+            <!-- Logo NetHub y botón de búsqueda -->
+            <div class="d-flex align-items-center ms-auto">
+                <a class="navbar-brand" href="../index.php">NetHub</a>
+                <a href="../public/search.php" class="btn btn-outline-light ms-3">
+                    <i class="fas fa-search"></i>
+                </a>
+            </div>
+
+            <!-- Contenedor del menú -->
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
-                    <a class="nav-link" href="../index.php">Inicio</a>
-                    <a class="nav-link" href="">Series</a>
-                    <a class="nav-link" href="">Películas</a>
-                    <a class="nav-link active" href="">Novedades</a>
-                    <a class="nav-link" href="./mylist.php">Mi lista</a>
+                    <a class="nav-link active" href="../index.php">Inicio</a>
+                    <a class="nav-link" href="../public/news.php">Novedades</a>
+                    <a class="nav-link" href="../public/mylist.php">Mi lista</a>
                     <?php if (isset($_SESSION['ADMIN']) && $_SESSION['ADMIN'] === true): ?>
                         <a class="nav-link" href="../admin/actived_users.php">Panel de administración</a>
                     <?php endif; ?>
                 </div>
                 <div class="navbar-nav ms-auto">
-                    <a href="search.php" class="btn btn-outline-light">
-                        <i class="fas fa-search"></i>
-                    </a>
                     <?php if ($email): ?>
                         <div class="dropdown mx-4">
-                            <button class="usuario-logueado dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="usuario-logueado dropdown-toggle mx-4" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-user me-2"></i>
                                 <?= htmlspecialchars($email) ?>
                             </button>
@@ -59,6 +64,7 @@ require_once '../includes/include_news.php';
             </div>
         </div>
     </nav>
+
 
     <div class="container mt-5">
         <?php if (!empty($peliculas)): ?>
