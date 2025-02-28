@@ -75,7 +75,7 @@ require_once '../includes/include_mylist.php';
         <div class="row">
             <?php if (!empty($peliculas)): ?>
                 <?php foreach ($peliculas as $pelicula): ?>
-                    <div class="col-md-2 mb-3">
+                    <div class="col-md-2 mb-4 text-center div-img">
                         <a href="./show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
                             <img src="../img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded-start" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
                         </a>

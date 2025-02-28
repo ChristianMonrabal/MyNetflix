@@ -91,17 +91,47 @@ require_once './includes/select_index.php';
             </div>
         <?php endif; ?>
 
+
         <?php foreach ($peliculasPorGenero as $genero => $peliculas): ?>
             <h3 class="mt-4"><?php echo htmlspecialchars($genero); ?></h3>
-            <div class="row">
-                <?php foreach ($peliculas as $pelicula): ?>
-                    <div class="col-md-2 mb-3 div-img">
-                        <a href="./public/show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
-                            <img src="./img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded-start" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
-                        </a>
+
+            <?php if (count($peliculas) > 6): ?>
+                <div id="carousel-<?php echo md5($genero); ?>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php foreach (array_chunk($peliculas, 6) as $index => $grupoPeliculas): ?>
+                            <div class="carousel-item <?php echo $index === 0 ? 'active' : ''; ?>">
+                                <div class="row">
+                                    <?php foreach ($grupoPeliculas as $pelicula): ?>
+                                        <div class="col-md-2 mb-3 div-img">
+                                            <a href="./public/show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
+                                                <img src="./img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
-            </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-<?php echo md5($genero); ?>" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-<?php echo md5($genero); ?>" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            <?php else: ?>
+                <div class="row">
+                    <?php foreach ($peliculas as $pelicula): ?>
+                        <div class="col-md-2 mb-3 div-img">
+                            <a href="./public/show_movie.php?id=<?php echo $pelicula['id_pelicula']; ?>" class="carteleras">
+                                <img src="./img/carteleras/<?php echo htmlspecialchars($pelicula['imagen_cartelera']); ?>" class="img-fluid rounded" alt="Cartelera de <?php echo htmlspecialchars($pelicula['titulo']); ?>">
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
         <?php endforeach; ?>
     </div>
 
