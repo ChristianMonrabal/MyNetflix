@@ -26,8 +26,8 @@ require_once '../includes/include_new_movies.php';
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
-                    <a class="nav-link active" href="">Usuarios activos</a>
-                    <a class="nav-link" href="disabled_users.php">Usuarios deshabilitados</a>
+                    <a class="nav-link active" href="../admin/actived_users.php">Usuarios activos</a>
+                    <a class="nav-link" href="../admin/disabled_users.php">Usuarios deshabilitados</a>
                     <a class="nav-link" href="../admin/show_movies.php">Películas</a>
                 </div>
                 <div class="dropdown mx-4">
