@@ -13,7 +13,6 @@ require_once '../includes/include_edit_users.php';
     <title>Editar Usuario</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="../css/desktop/admin.css"> -->
     <link rel="stylesheet" href="../css/desktop/index.css">
 </head>
 
@@ -26,8 +25,8 @@ require_once '../includes/include_edit_users.php';
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <div class="navbar-nav mx-auto">
-                    <a class="nav-link active" href="../admin/actived_users.php">Usuarios activos</a>
-                    <a class="nav-link" href="../disabled_users.php">Usuarios deshabilitados</a>
+                    <a class="nav-link" href="../admin/actived_users.php">Usuarios activos</a>
+                    <a class="nav-link" href="../admin/disabled_users.php">Usuarios deshabilitados</a>
                     <a class="nav-link" href="../admin/show_movies.php">Películas</a>
                 </div>
                 <div class="dropdown mx-4">

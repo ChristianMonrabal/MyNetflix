@@ -48,13 +48,13 @@ require_once '../includes/select_actived_users.php';
     <div class="container mt-4">
         <h5>Buscar usuarios</h5>
         <div class="row mb-3">
-            <div class="col-md-4">
+            <div class="col-md-4 position-relative">
                 <input type="text" id="emailSearch" class="form-control pe-5" placeholder="Buscar por email">
                 <span id="clearSearch" class="position-absolute top-50 end-0 translate-middle-y pe-3 cursor-pointer" style="display:none;">
                     <i class="fas fa-times"></i>
                 </span>
             </div>
-        </div>
+    </div>
 
         <?php if (empty($usuarios)): ?>
             <div class="alert alert-info text-center">No hay usuarios activos en este momento.</div>

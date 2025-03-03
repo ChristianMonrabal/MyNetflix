@@ -55,7 +55,7 @@ require_once '../includes/include_news.php';
                             </ul>
                         </div>
                     <?php else: ?>
-                        <a href="public/signin.php" class="usuario-logueado text-decoration-none mx-4">
+                        <a href="signin.php" class="usuario-logueado text-decoration-none mx-4">
                             <i class="fas fa-user me-2"></i>
                             Iniciar sesión
                         </a>
